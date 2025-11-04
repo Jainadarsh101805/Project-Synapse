@@ -19,9 +19,9 @@ It helps users explore, understand, and apply for schemes easily — bridging th
 ### 🧰 Tech Stack
 | Component | Technology Used |
 |------------|------------------|
-| **Frontend** | HTML, CSS, JavaScript, React (if used) |
-| **Backend** | Python, FastAPI |
-| **Database** | MongoDB / PostgreSQL (whichever you used) |
+| **Frontend** | HTML, CSS, JavaScript, React, Tailwind, |
+| **Backend** | Python, FastAPI, AI Chatbot, LLM |
+| **Database** | SQL |
 | **Hosting** | AWS / Render / GitHub Pages |
 | **Version Control** | Git & GitHub |
 
