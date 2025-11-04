@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parcel Delivery Dashboard (Singapore)</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f7f7f7; }
+    header { background-color: #007bff; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+    header h1 { margin: 0; font-size: 20px; }
+    nav { display: flex; gap: 15px; flex-wrap: wrap; }
+    nav a { color: white; text-decoration: none; font-weight: bold; padding: 5px 10px; border-radius: 5px; transition: background-color 0.3s; }
+    nav a:hover { background-color: rgba(255, 255, 255, 0.2); }
+    .card { border: 1px solid #ddd; padding: 20px; border-radius: 10px; max-width: 600px; margin: 30px auto; background-color: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .orders { margin-top: 20px; }
+    .order { border-bottom: 1px solid #eee; padding: 10px 0; }
+    .order:last-child { border-bottom: none; }
+    .status { font-weight: bold; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Parcel Delivery Dashboard (Singapore)</h1>
+<nav style="background:#2c3e50; padding:10px 20px; display:flex; gap:15px; justify-content:flex-end;">
+  <a href="http://127.0.0.1:5500/frontened/Dasboard.html" style="color:white; text-decoration:none;">Dashboard</a>
+  <a href="http://127.0.0.1:5500/frontened/progress%20bar.html" style="color:white; text-decoration:none;">Book a Delivery</a>
+  <a href="http://127.0.0.1:5500/frontened/Track%20Delivery.html" style="color:white; text-decoration:none;">Track Parcel</a>
+  <a href="http://127.0.0.1:5500/frontened/My%20Delivery%20.html" style="color:white; text-decoration:none;">My Deliveries</a>
+  <a href="http://127.0.0.1:5500/frontened/profile(customer).html" style="color:white; text-decoration:none;">Profile</a>
+  <a href="http://127.0.0.1:5500/frontened/Support.us%20.html" style="color:white; text-decoration:none;">Support Us</a>
+  <a href="http://127.0.0.1:5500/frontened/tp.html" style="color:white; text-decoration:none;">Logout</a>
+</nav>
+  </header>
+  <div id="bookingsContainer" class="grid gap-4 p-4"></div>
+<script>
+const container = document.getElementById('bookingsContainer');
+const bookings = JSON.parse(localStorage.getItem('bookings') || '[]');
+if (bookings.length === 0) {
+  container.innerHTML = "<p>No bookings found.</p>";
+} else {
+  bookings.forEach(b => {
+    const box = document.createElement('div');
+    box.style.cssText = 'border:1px solid #ddd; border-radius:10px; padding:12px; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.05)';
+    box.innerHTML = `
+      <h3><b>AWB:</b> ${b.awb}</h3>
+      <p><b>Pickup:</b> ${b.pickup.name} (${b.pickup.city})</p>
+      <p><b>Delivery:</b> ${b.delivery.name} (${b.delivery.city})</p>
+      <p><b>Total:</b> S$${b.pricing.total}</p>
+      <p><b>Status:</b> ${b.status}</p>
+      <button onclick="track('${b.awb}')" style="margin-top:10px; background:#4f46e5; color:#fff; padding:6px 12px; border:none; border-radius:6px;">Track</button>
+    `;
+    container.appendChild(box);
+  });
+}
+function track(awb){
+  window.location.href = `http://127.0.0.1:5500/frontened/Track%20Delivery.html?awb=${awb}`;
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vengers Delivery Partner Login</title>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-black flex items-center justify-center min-h-screen">
+
+<div class="bg-gray-900 shadow-xl rounded-lg p-10 w-full max-w-md text-white">
+  <h2 class="text-4xl font-extrabold text-center mb-8">Login / Register</h2>
+
+  <!-- Role Selection -->
+  <div class="flex justify-around mb-8">
+    <button id="riderBtn" class="bg-red-600 text-white px-8 py-4 rounded-lg hover:bg-red-700 text-lg font-semibold">Rider</button>
+    <button id="customerBtn" class="bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 text-lg font-semibold">Customer</button>
+  </div>
+
+  <!-- Rider Login Form -->
+  <form id="riderForm" class="space-y-5 hidden">
+    <input type="text" id="riderNameInput" placeholder="Full Name" class="w-full p-3 rounded-lg text-lg text-black">
+    <input type="email" id="riderEmailInput" placeholder="Email" class="w-full p-3 rounded-lg text-lg text-black">
+    <input type="tel" id="riderPhoneInput" placeholder="Phone Number" class="w-full p-3 rounded-lg text-lg text-black">
+    <input type="file" id="riderImageUpload" class="w-full p-3 rounded-lg text-lg text-white">
+    <button type="submit" class="bg-red-600 w-full py-3 rounded-lg hover:bg-red-700 text-xl font-bold">Login as Rider</button>
+  </form>
+
+  <!-- Customer Login Form -->
+  <form id="customerForm" class="space-y-5 hidden">
+    <input type="text" id="customerNameInput" placeholder="Full Name" class="w-full p-3 rounded-lg text-lg text-black">
+    <input type="email" id="customerEmailInput" placeholder="Email" class="w-full p-3 rounded-lg text-lg text-black">
+    <button type="submit" class="bg-blue-600 w-full py-3 rounded-lg hover:bg-blue-700 text-xl font-bold">Login as Customer</button>
+  </form>
+
+  <!-- Google Login -->
+  <div class="mt-8 text-center">
+    <p class="mb-3 text-lg">Or sign in with Google</p>
+    <div id="g_id_onload"
+         data-client_id="41334979362-280mj6eg1jqoopvn7clk08685tspagrb.apps.googleusercontent.com"
+         data-context="signin"
+         data-ux_mode="popup"
+         data-callback="handleCredentialResponse"
+         data-auto_prompt="false">
+    </div>
+    <div class="g_id_signin" data-type="standard"></div>
+  </div>
+</div>
+
+<script>
+// Toggle forms
+document.getElementById("riderBtn").addEventListener("click", () => {
+  document.getElementById("riderForm").classList.remove("hidden");
+  document.getElementById("customerForm").classList.add("hidden");
+});
+document.getElementById("customerBtn").addEventListener("click", () => {
+  document.getElementById("customerForm").classList.remove("hidden");
+  document.getElementById("riderForm").classList.add("hidden");
+});
+
+// Google login
+function handleCredentialResponse(response){
+  const data = parseJwt(response.credential);
+  alert(`Logged in as ${data.name} (${data.email})`);
+}
+
+// JWT decode
+function parseJwt(token){
+  const base64Url = token.split('.')[1];
+  const base64 = base64Url.replace(/-/g,'+').replace(/_/g,'/');
+  const jsonPayload = decodeURIComponent(atob(base64).split('').map(c=> '%' + ('00'+c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+  return JSON.parse(jsonPayload);
+}
+
+// Rider login
+document.getElementById("riderForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  alert("Rider logged in! Redirect to dashboard after login.");
+});
+
+// Customer login
+document.getElementById("customerForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  alert("Customer logged in! No dashboard available.");
+});
+</script>
+
+</body>
+</html>

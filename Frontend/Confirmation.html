@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking Confirmation - Vengers</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+  <div class="bg-white p-8 rounded-2xl shadow-lg max-w-lg text-center">
+    <svg class="w-20 h-20 mx-auto mb-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+    </svg>
+    <h1 class="text-3xl font-bold mb-4 text-green-800">Your booking has been confirmed!</h1>
+
+    <p class="text-lg text-green-600 mb-6">
+      Total payable: <span class="font-bold text-green-900" id="final-total-payable">S$0</span>
+    </p>
+
+    <div class="p-4 rounded-lg bg-green-50 mb-6">
+      <p class="text-sm text-green-700 mb-2">
+        Your AWB / Consignment ID is: <b id="awb-id"></b>
+      </p>
+      <p class="text-sm text-green-700">
+        (See console for the booking payload)
+      </p>
+    </div>
+
+    <button id="my-bookings-btn"
+      class="w-full bg-indigo-600 text-white font-bold py-3 px-6 rounded-full transition hover:bg-indigo-700 shadow-md">
+      Go to My Bookings
+    </button>
+  </div>
+
+<script>
+  // Read values from query string
+  const params = new URLSearchParams(window.location.search);
+
+  // AWB logic
+  let awb = params.get("awb");
+  if (!awb) {
+    // generate AWB like "VNG" + 8 random alphanumeric chars
+    awb = "VNG" + Math.random().toString(36).substring(2, 10).toUpperCase();
+  }
+
+  // Total payable logic
+  let total = params.get("total");
+  if (!total) {
+    // if not passed, just set a random amount for demo
+    total = (Math.random() * (50 - 5) + 5).toFixed(2); // between S$5 and S$50
+  }
+
+  // Set into DOM
+  document.getElementById("awb-id").innerText = awb;
+  document.getElementById("final-total-payable").innerText = "S$" + total;
+
+  // Redirect to My Deliveries when button clicked
+  document.getElementById("my-bookings-btn").addEventListener("click", () => {
+    window.location.href = "My Delivery .html?awb=" + awb;
+  });
+</script>
+
+</body>
+</html>

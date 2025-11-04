@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Venger Chatbot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(to right, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .chat-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 80vh;
+        }
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .message {
+            display: flex;
+            align-items: flex-end;
+            margin-bottom: 5px;
+        }
+        .message.bot .avatar {
+            margin-right: 10px;
+        }
+        .message.user {
+            justify-content: flex-end;
+        }
+        .message.user .avatar {
+            margin-left: 10px;
+        }
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+        }
+        .message-content {
+            max-width: 70%;
+            padding: 10px 15px;
+            border-radius: 20px;
+            position: relative;
+        }
+        .message.user .message-content {
+            background-color: #007bff;
+            color: white;
+            margin-left: auto;
+        }
+        .message.bot .message-content {
+            background-color: #f1f1f1;
+            color: #333;
+        }
+        .input-area {
+            border-top: 1px solid #ddd;
+            padding: 10px 20px;
+            background: #fafafa;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+        .input-field {
+            flex: 1;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+        }
+        .send-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .send-btn:hover {
+            background-color: #0056b3;
+        }
+        .typing {
+            display: none;
+            font-style: italic;
+            color: #888;
+            margin-top: 10px;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .vehicle-img {
+            width: 80px;
+            height: 50px;
+            margin-right: 10px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+        .quick-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .quick-btn {
+            background-color: #764ba2;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        .quick-btn:hover {
+            background-color: #5a3482;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot">
+                <div class="avatar" style="background-image: url('https://cdn-icons-png.flaticon.com/512/4712/4712027.png'); background-size: cover;"></div>
+                <div class="message-content fade-in">
+                    <strong>Venger:</strong> Hello! I'm Venger, your AI assistant for Vengers Express. You can ask me about booking, delivery options, features, or FAQs.
+                </div>
+            </div>
+        </div>
+        <div class="typing" id="typingIndicator">Venger is typing...</div>
+        <div class="input-area">
+            <div class="input-group">
+                <input type="text" id="userInput" class="input-field" placeholder="Type your message here..." onkeypress="handleKeyPress(event)" />
+                <button onclick="sendMessage()" class="send-btn">Send</button>
+            </div>
+            <div class="quick-buttons">
+                <button class="quick-btn" onclick="sendQuickMessage('Book Delivery')">Book Delivery</button>
+                <button class="quick-btn" onclick="sendQuickMessage('Track Parcel')">Track Parcel</button>
+                <button class="quick-btn" onclick="sendQuickMessage('Delivery Options')">Delivery Options</button>
+                <button class="quick-btn" onclick="sendQuickMessage('FAQs')">FAQs</button>
+                <button class="quick-btn" onclick="sendQuickMessage('Why Vengers')">Why Vengers</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const responses = {
+            "hello": [
+                "Hi! Welcome to Vengers Express. How can I help you today?",
+                "Hello! I'm Venger, your assistant for Vengers Express."
+            ],
+            "book delivery": [
+                "Booking is easy! Click 'Book a Delivery' on the dashboard, select your vehicle, and confirm. You can choose Express or Later delivery."
+            ],
+            "track parcel": [
+                "To track your parcel, go to the 'Track Parcel' section and enter your tracking ID. Real-time updates will be displayed."
+            ],
+            "delivery options": [
+                `<div><img class="vehicle-img" src="https://cdn-icons-png.flaticon.com/512/804/804382.png"/> Bike: Urgent documents and small items.</div>
+                 <div><img class="vehicle-img" src="https://cdn-icons-png.flaticon.com/512/641/641432.png"/> Car: Fragile or larger items like cakes or flowers.</div>
+                 <div><img class="vehicle-img" src="https://cdn-icons-png.flaticon.com/512/1159/1159309.png"/> Van/Truck: Appliances, furniture, bulky parcels.</div>`
+            ],
+            "faq": [
+                `<strong>FAQs:</strong><br>
+                 <ul>
+                     <li><strong>Where do you deliver?</strong> Anywhere in Singapore.</li>
+                     <li><strong>Can I track my parcel?</strong> Yes, real-time tracking is available.</li>
+                     <li><strong>Can I cancel?</strong> Yes, cancellations are possible before pickup.</li>
+                     <li><strong>What items can I send?</strong> Documents, food, packages, appliances, furniture.</li>
+                 </ul>`
+            ],
+            "why vengers": [
+                "Why choose Vengers Express?<br>- Fastest delivery in Singapore<br>- Easy-to-use platform<br>- Secure handling of parcels<br>- AI-assisted routing<br>- Competitive pricing"
+            ],
+            "features": [
+                "Our features include:<br>- Fast delivery<br>- Easy-to-use interface<br>- AI-assisted route optimization<br>- Real-time parcel tracking<br>- Secure handling of items"
+            ],
+            "default": [
+                "I'm sorry, I didn't understand that. You can ask me about booking, delivery options, features, or FAQs.",
+                "I can help you with booking deliveries, tracking parcels, or explaining our services."
+            ]
+        };
+
+        const chatMessages = document.getElementById('chatMessages');
+        const userInput = document.getElementById('userInput');
+        const typingIndicator = document.getElementById('typingIndicator');
+
+        function getResponse(input) {
+            const lowerInput = input.toLowerCase();
+            for (const key in responses) {
+                if (lowerInput.includes(key)) {
+                    return responses[key][Math.floor(Math.random() * responses[key].length)];
+                }
+            }
+            return responses["default"][Math.floor(Math.random() * responses["default"].length)];
+        }
+
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender} fade-in`;
+
+            const avatarDiv = document.createElement('div');
+            avatarDiv.className = 'avatar';
+            avatarDiv.style.backgroundImage = sender === 'user' 
+                ? "url('https://placehold.co/40x40/ffb347/ffffff?text=You')" 
+                : "url('https://cdn-icons-png.flaticon.com/512/4712/4712027.png')";
+            avatarDiv.style.backgroundSize = 'cover';
+
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            contentDiv.innerHTML = sender === 'user' ? `<strong>You:</strong> ${text}` : `<strong>Venger:</strong> ${text}`;
+
+            messageDiv.appendChild(sender === 'user' ? contentDiv : avatarDiv);
+            messageDiv.appendChild(sender === 'user' ? avatarDiv : contentDiv);
+
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function sendMessage() {
+            const input = userInput.value.trim();
+            if (input === '') return;
+
+            addMessage(input, 'user');
+            userInput.value = '';
+
+            typingIndicator.style.display = 'block';
+
+            setTimeout(() => {
+                typingIndicator.style.display = 'none';
+                const response = getResponse(input);
+                addMessage(response, 'bot');
+            }, 1000 + Math.random() * 1000);
+        }
+
+        function sendQuickMessage(text) {
+            addMessage(text, 'user');
+            typingIndicator.style.display = 'block';
+            setTimeout(() => {
+                typingIndicator.style.display = 'none';
+                const response = getResponse(text);
+                addMessage(response, 'bot');
+            }, 500 + Math.random() * 800);
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+    </script>
+</body>
+</html>

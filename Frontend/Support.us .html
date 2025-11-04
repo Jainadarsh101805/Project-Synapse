@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syanpse - Team CodeVenger</title>
+    <style>
+        /* Global Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #eeeeee;
+            color: white;
+        }
+
+        /* Container Styles */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header Styles */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #b956ac;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        header h1 {
+            color: #0c0c0c;
+            font-size: 36px;
+        }
+
+        .contact-link {
+            color: #00ffcc;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 20px;
+            border: 2px solid #00ffcc;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .contact-link:hover {
+            background-color: #00ffcc;
+            color: #bb327d;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            background-color: #b84487;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .navbar a:hover {
+            color: yellow;
+        }
+
+        /* Main Section Styles */
+        main {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-top: 20px;
+        }
+
+        /* About Section Styles */
+        .about-section {
+            width: 60%;
+            background-color: #bb2d85;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px #00ffcc;
+        }
+
+        .about-section h2,
+        .about-section h3 {
+            color: #00ffcc;
+            text-align: center;
+        }
+
+        .about-section p {
+            text-align: justify;
+            line-height: 1.8;
+        }
+
+        .about-section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .about-section ul li {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+
+        /* Robot Section Styles */
+        .robot-section {
+            width: 35%;
+        }
+
+        .robot-section img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 0 15px #00ffcc;
+        }
+
+        /* Glow Effect */
+        .glow {
+            text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc, 0 0 30px #00ffcc, 0 0 40px #00ffcc, 0 0 50px #00ffcc, 0 0 60px #00ffcc, 0 0 70px #00ffcc;
+        }
+    </style>
+</head>
+<body>
+
+        <!-- Header -->
+        <header>
+            <h1>Parcel Delivery Dashboard (Singapore)</h1>
+        </header>
+
+
+        <!-- Navigation Bar -->
+<nav style="background:#2c3e50; padding:10px 20px; display:flex; gap:15px; justify-content:flex-end;">
+  <a href="http://127.0.0.1:5500/frontened/Dasboard.html" style="color:white; text-decoration:none;">Dashboard</a>
+  <a href="http://127.0.0.1:5500/frontened/progress%20bar.html" style="color:white; text-decoration:none;">Book a Delivery</a>
+  <a href="http://127.0.0.1:5500/frontened/Track%20Delivery.html" style="color:white; text-decoration:none;">Track Parcel</a>
+  <a href="http://127.0.0.1:5500/frontened/My%20Delivery%20.html" style="color:white; text-decoration:none;">My Deliveries</a>
+  <a href="http://127.0.0.1:5500/frontened/profile(customer).html" style="color:white; text-decoration:none;">Profile</a>
+  <a href="http://127.0.0.1:5500/frontened/Support.us%20.html" style="color:white; text-decoration:none;">Support Us</a>
+  <a href="http://127.0.0.1:5500/frontened/tp.html" style="color:white; text-decoration:none;">Logout</a>
+</nav>
+
+        <main>
+<section class="about-section">
+    <h2>TEAM CodeVengers</h2>
+    <p>We are a college team, and our objective is to develop a comprehensive package delivery platform that ensures smooth, reliable, and efficient last-mile delivery services. The platform is designed to enhance the user experience by providing an interactive and user-friendly interface for both customers and delivery personnel. Customers can easily request pickups and track their parcels, while delivery agents receive optimized routes and real-time updates...</p>
+    
+    <h3>TEAM MEMBERS</h3>
+    <ul>
+        <li style="display:flex; align-items:center; gap:12px;">
+            <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="Adarsh" style="width:50px; height:50px; border-radius:50%;">
+            <span>Adarsh Jain - <br>+91 73898 44273</span>
+        </li>
+        <li style="display:flex; align-items:center; gap:12px;">
+            <img src="https://randomuser.me/api/portraits/men/2.jpg" alt="Akarsh" style="width:50px; height:50px; border-radius:50%;">
+            <span>Akarsh Jain - <br>+91 93998 00172</span>
+        </li>
+        <li style="display:flex; align-items:center; gap:12px;">
+            <img src="https://randomuser.me/api/portraits/women/3.jpg" alt="Simran" style="width:50px; height:50px; border-radius:50%;">
+            <span>Simran Nair - <br>+91 82692 07708</span>
+        </li>
+    </ul>
+</section>
+
+
+            <section class="Package Delivery -section">
+                <img src="https://d2hbvxi6ld0iqf.cloudfront.net/Theme/img/vacation-package-booking-system.jpg"
+                alt="Package Delivery">
+            </section>
+        </main>
+    </div>
+</body>
+</html>
