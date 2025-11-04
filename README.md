@@ -21,7 +21,7 @@ It helps users explore, understand, and apply for schemes easily — bridging th
 |------------|------------------|
 | **Frontend** | HTML, CSS, JavaScript, React, Tailwind, |
 | **Backend** | Python, FastAPI, AI Chatbot, LLM |
-| **Database** | SQL |
+| **Database** | SQL Model |
 | **Hosting** | AWS / Render / GitHub Pages |
 | **Version Control** | Git & GitHub |
 
