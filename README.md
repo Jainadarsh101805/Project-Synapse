@@ -37,7 +37,13 @@ Built as a **full-stack application**, it integrates **FastAPI**, **SQLModel**, 
 
 Follow these steps to set up and run the project locally:
 
+---Live
+https://project-synapse-static-frontend.vercel.app/tp.html
+
 ```bash
+
+---Live
+https://project-synapse-static-frontend.vercel.app/tp.html
 # Clone this repository
 git clone https://github.com/Jainadarsh101805/Project-Synapse.git
 
